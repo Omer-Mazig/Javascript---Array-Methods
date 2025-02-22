@@ -26,8 +26,8 @@ Array.prototype.mySlice = function <T>(
   actualStart = parseArgument(start) ?? 0; // 0 is default
   actualEnd = parseArgument(end) ?? len;
 
-  actualStart = normalizeArrayIndex(actualStart, len);
-  actualEnd = normalizeArrayIndex(actualEnd, len);
+  actualStart = normalizeIndex(actualStart, len);
+  actualEnd = normalizeIndex(actualEnd, len);
 
   // If start is greater than end, return empty array
   if (actualStart >= actualEnd) {
@@ -73,7 +73,7 @@ function parseArgument(value: unknown): number | undefined {
   return undefined;
 }
 
-function normalizeArrayIndex(index: number, length: number): number {
+function normalizeIndex(index: number, length: number): number {
   if (index < 0) {
     return Math.max(length + index, 0);
   }

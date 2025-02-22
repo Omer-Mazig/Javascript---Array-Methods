@@ -19,12 +19,7 @@ Array.prototype.myIndexOf = function <T>(
   const len = this.length;
 
   // Handle negative fromIndex
-  let startingIndex = fromIndex;
-  if (startingIndex < 0) {
-    startingIndex = Math.max(len + startingIndex, 0);
-  } else {
-    startingIndex = Math.min(startingIndex, len);
-  }
+  let startingIndex = normalizeIndex(fromIndex, len);
 
   for (let i = startingIndex; i < len; i++) {
     if (i in this) {
@@ -35,3 +30,10 @@ Array.prototype.myIndexOf = function <T>(
   }
   return -1;
 };
+
+function normalizeIndex(index: number, length: number): number {
+  if (index < 0) {
+    return Math.max(length + index, 0);
+  }
+  return Math.min(index, length);
+}
