@@ -104,4 +104,20 @@ describe("Array.prototype.myAt", () => {
       array.at(-Number.MAX_SAFE_INTEGER)
     );
   });
+
+  test("handles array as argument", () => {
+    const array = [1, 2, 3];
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt([4])).toBe(array.at([4]));
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt([4, 5, 6])).toBe(array.at([4, 5, 6]));
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt([])).toBe(array.at([]));
+  });
+
+  test("returns first element when no argument is provided", () => {
+    const array = [1, 2, 3];
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt()).toBe(array.at());
+  });
 });

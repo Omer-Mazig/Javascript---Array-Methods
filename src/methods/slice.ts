@@ -19,9 +19,9 @@ Array.prototype.mySlice = function <T>(
   const len = this.length;
   const result: T[] = [];
 
-  // Convert parameters to numbers using the helper function
-  let actualStart = convertToNumber(start, 0);
-  let actualEnd = convertToNumber(end, len);
+  // Handle default values here instead of in convertToNumber
+  let actualStart = start === undefined ? 0 : convertToNumber(start);
+  let actualEnd = end === undefined ? len : convertToNumber(end);
 
   // Handle negative indices using helper function
   actualStart = handleNegativeIndex(actualStart, len);
