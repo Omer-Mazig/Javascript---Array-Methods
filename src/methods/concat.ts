@@ -2,6 +2,10 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
+    /**
+     * Combines two or more arrays.
+     * @param items The arrays to concatenate.
+     */
     myConcat(...items: Array<T>[]): T[];
     myConcat(...items: (T | Array<T>)[]): T[];
   }
@@ -50,4 +54,5 @@ function isConcatSpreadable(item: unknown): boolean {
       ] === true)
   );
 }
-// [1, true].myConcat([1 , true] , false , 1 , undefined);
+// [1, true].myConcat([1, true], false, 1, undefined);
+// [1, true].concat([1, true], false, 1, undefined);
