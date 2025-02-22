@@ -115,6 +115,18 @@ describe("Array.prototype.myAt", () => {
     expect(array.myAt([])).toBe(array.at([]));
   });
 
+  test("handles object as argument", () => {
+    const array = [1, 2, 3];
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt({})).toBe(array.at({}));
+  });
+
+  test("handles non numaric string as argument", () => {
+    const array = [1, 2, 3];
+    // @ts-ignore - Testing JavaScript runtime behavior
+    expect(array.myAt("string")).toBe(array.at("string"));
+  });
+
   test("returns first element when no argument is provided", () => {
     const array = [1, 2, 3];
     // @ts-ignore - Testing JavaScript runtime behavior

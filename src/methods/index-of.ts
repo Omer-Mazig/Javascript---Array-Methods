@@ -17,7 +17,15 @@ Array.prototype.myIndexOf = function <T>(
   fromIndex: number = 0
 ): number {
   const len = this.length;
-  const startingIndex = handleNegativeIndex(fromIndex, len);
+
+  // Handle negative fromIndex
+  let startingIndex = fromIndex;
+  if (startingIndex < 0) {
+    startingIndex = Math.max(len + startingIndex, 0);
+  } else {
+    startingIndex = Math.min(startingIndex, len);
+  }
+
   for (let i = startingIndex; i < len; i++) {
     if (i in this) {
       if (searchElement === this[i]) {

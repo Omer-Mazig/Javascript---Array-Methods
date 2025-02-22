@@ -19,18 +19,23 @@ Array.prototype.mySlice = function <T>(
   const len = this.length;
   const result: T[] = [];
 
-  // Handle default values here instead of in convertToNumber
-  let actualStart = start === undefined ? 0 : convertToNumber(start);
-  let actualEnd = end === undefined ? len : convertToNumber(end);
+  // Convert parameters to numbers
+  let actualStart = 0;
+  let actualEnd = len;
 
-  // Handle negative indices using helper function
-  actualStart = handleNegativeIndex(actualStart, len);
-  actualEnd = handleNegativeIndex(actualEnd, len);
+  actualStart = parseArgument(start) ?? 0; // 0 is default
+  actualEnd = parseArgument(end) ?? len;
+
+  actualStart = normalizeArrayIndex(actualStart, len);
+  actualEnd = normalizeArrayIndex(actualEnd, len);
 
   // If start is greater than end, return empty array
   if (actualStart >= actualEnd) {
     return result;
   }
+
+  actualStart = roundNumber(actualStart);
+  actualEnd = roundNumber(actualEnd);
 
   // Copy elements to result array, preserving holes in sparse arrays
   let j = 0;
@@ -43,3 +48,39 @@ Array.prototype.mySlice = function <T>(
 
   return result;
 };
+
+function parseArgument(value: unknown): number | undefined {
+  if (value === undefined) return undefined;
+
+  if (typeof value === "string" && !isNaN(+value)) {
+    return +value;
+  }
+
+  if (Array.isArray(value) && value.length === 1) {
+    const item = value[0];
+    if (
+      (typeof item === "number" && !isNaN(item)) ||
+      (typeof item === "string" && !isNaN(+item))
+    ) {
+      return +item;
+    }
+  }
+
+  if (typeof value === "number" && !isNaN(value)) {
+    return value;
+  }
+
+  return undefined;
+}
+
+function normalizeArrayIndex(index: number, length: number): number {
+  if (index < 0) {
+    return Math.max(length + index, 0);
+  }
+  return Math.min(index, length);
+}
+
+function roundNumber(n: number) {
+  n > 0 ? (n = Math.floor(n)) : Math.ceil(n);
+  return n;
+}
