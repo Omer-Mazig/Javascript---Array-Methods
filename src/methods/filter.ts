@@ -2,6 +2,11 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
+    /**
+     * Returns a new array with all elements that pass the test implemented by the provided function.
+     * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
+     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+     */
     myFilter<S extends T>(
       callback: (value: T, index: number, array: T[]) => value is S
     ): S[];
