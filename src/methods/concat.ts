@@ -14,7 +14,8 @@ declare global {
 Array.prototype.myConcat = function <T>(
   this: Array<T>,
   ...items: Array<T>[] | (T | Array<T>)[]
-): T[] {
+): // return the type of 'this'
+T[] {
   const result: T[] = [];
 
   for (let i = 0; i < this.length; i++) {
@@ -54,5 +55,3 @@ function isConcatSpreadable(item: unknown): boolean {
       ] === true)
   );
 }
-// [1, true].myConcat([1, true], false, 1, undefined);
-// [1, true].concat([1, true], false, 1, undefined);
