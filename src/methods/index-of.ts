@@ -1,4 +1,4 @@
-import { handleNegativeIndex } from "../arrays";
+import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {

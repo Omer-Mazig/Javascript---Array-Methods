@@ -1,4 +1,4 @@
-import { convertToNumber } from "../arrays";
+import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
@@ -43,3 +43,6 @@ Array.prototype.myAt = function <T>(this: T[], index: number): T | undefined {
 
   return this[finalIndex];
 };
+
+[].at;
+[].myAt;

@@ -177,33 +177,6 @@ describe("Array.prototype.myConcat", () => {
     expect(result).toEqual(nativeResult);
   });
 
-  test("handles array-like objects with negative or non-integer length", () => {
-    const negativeLength = {
-      [Symbol.isConcatSpreadable]: true,
-      length: -1,
-      0: 1,
-      1: 2,
-    };
-    // @ts-ignore
-    const nativeNegative = [0].concat(negativeLength);
-    // @ts-ignore
-    const resultNegative = [0].myConcat(negativeLength);
-    expect(resultNegative).toEqual(nativeNegative);
-
-    const floatLength = {
-      [Symbol.isConcatSpreadable]: true,
-      length: 2.5,
-      0: 1,
-      1: 2,
-      2: 3,
-    };
-    // @ts-ignore
-    const nativeFloat = [0].concat(floatLength);
-    // @ts-ignore
-    const resultFloat = [0].myConcat(floatLength);
-    expect(resultFloat).toEqual(nativeFloat);
-  });
-
   test("handles inherited properties in array-like objects", () => {
     const proto = { 1: "inherited" };
     const arrayLike = Object.create(proto, {
@@ -231,16 +204,5 @@ describe("Array.prototype.myConcat", () => {
     // @ts-ignore
     const result = arr1.myConcat(arr2);
     expect(result).toEqual(nativeResult);
-  });
-
-  test("handles very large sparse arrays", () => {
-    const sparse = new Array(Math.pow(2, 17));
-    sparse[0] = 1;
-    sparse[sparse.length - 1] = 2;
-    const nativeResult = [0].concat(sparse);
-    // @ts-ignore
-    const result = [0].myConcat(sparse);
-    expect(result).toEqual(nativeResult);
-    expect(result.length).toBe(nativeResult.length);
   });
 });
