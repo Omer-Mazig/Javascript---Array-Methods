@@ -11,6 +11,8 @@ declare global {
   }
 }
 
+// TODO: handle fromIndex when passing something different than numbers
+
 Array.prototype.myIndexOf = function <T>(
   this: T[],
   searchElement: T,
@@ -18,7 +20,7 @@ Array.prototype.myIndexOf = function <T>(
 ): number {
   const len = this.length;
 
-  // Handle negative fromIndex
+  fromIndex = parseArgument(fromIndex) ?? 0;
   let startingIndex = normalizeIndex(fromIndex, len);
 
   for (let i = startingIndex; i < len; i++) {
@@ -36,4 +38,28 @@ function normalizeIndex(index: number, length: number): number {
     return Math.max(length + index, 0);
   }
   return Math.min(index, length);
+}
+
+function parseArgument(value: unknown): number | undefined {
+  if (value === undefined) return undefined;
+
+  if (typeof value === "string" && !isNaN(+value)) {
+    return +value;
+  }
+
+  if (Array.isArray(value) && value.length === 1) {
+    const item = value[0];
+    if (
+      (typeof item === "number" && !isNaN(item)) ||
+      (typeof item === "string" && !isNaN(+item))
+    ) {
+      return +item;
+    }
+  }
+
+  if (typeof value === "number" && !isNaN(value)) {
+    return value;
+  }
+
+  return undefined;
 }

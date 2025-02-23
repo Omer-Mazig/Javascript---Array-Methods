@@ -58,4 +58,22 @@ describe("Array.prototype.myIndexOf", () => {
       expect(result).toBe(nativeResult);
     });
   });
+
+  test("should handle fromIndex type coercion", () => {
+    const array = [1, 2, 3, 4, 5];
+    // @ts-ignore
+    expect(array.myIndexOf(1, [])).toBe(array.indexOf(1, []));
+    // @ts-ignore
+    expect(array.myIndexOf(1, [1])).toBe(array.indexOf(1, [1]));
+    // @ts-ignore
+    expect(array.myIndexOf(1, [-1])).toBe(array.indexOf(1, [-1]));
+    // @ts-ignore
+    expect(array.myIndexOf(1, [1, 2])).toBe(array.indexOf(1, [1, 2]));
+    // @ts-ignore
+    expect(array.myIndexOf(1, [""])).toBe(array.indexOf(1, [""]));
+    // @ts-ignore
+    expect(array.myIndexOf(1, ["baba"])).toBe(array.indexOf(1, ["baba"]));
+    // @ts-ignore
+    expect(array.myIndexOf(1, ["2"])).toBe(array.indexOf(1, ["2"]));
+  });
 });
