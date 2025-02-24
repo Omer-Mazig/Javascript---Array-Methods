@@ -3,28 +3,24 @@ import { constructTypeErrorMessage } from "../arrays";
 declare global {
   interface Array<T> {
     /**
-      Performs the specified action for each element in an array.
-      @param callbackfn A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
-      @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+     * Performs the specified action for each element in an array.
+     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
      */
     myForEach(
-      callback: (value: T, index: number, array: T[]) => void,
+      callbackfn: (value: T, index: number, array: T[]) => void,
       thisArg?: any
     ): void;
   }
 }
 
-Array.prototype.myForEach = function <T>(
-  this: T[],
-  callback: (value: T, index: number, array: T[]) => void,
-  thisArg?: any
-): void {
-  if (typeof callback !== "function") {
-    throw new TypeError(constructTypeErrorMessage(callback));
+Array.prototype.myForEach = function (callbackfn, thisArg) {
+  if (typeof callbackfn !== "function") {
+    throw new TypeError(constructTypeErrorMessage(callbackfn));
   }
 
   const boundCallback =
-    thisArg !== undefined ? callback.bind(thisArg) : callback;
+    thisArg !== undefined ? callbackfn.bind(thisArg) : callbackfn;
 
   for (let i = 0; i < this.length; i++) {
     if (i in this) {
@@ -33,5 +29,6 @@ Array.prototype.myForEach = function <T>(
   }
 };
 
-[].forEach;
-[].myForEach;
+["baba"].myForEach((item, index, arr) => {
+  item.toLowerCase();
+});

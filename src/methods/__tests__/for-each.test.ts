@@ -217,3 +217,14 @@ describe("Array.prototype.myForEach", () => {
     expect(processed).toEqual([1, 2, 3]); // Should process until error
   });
 });
+
+it("should use the provided this context", () => {
+  const numbers = [1, 2, 3];
+  const context = { threshold: 2 };
+
+  const log = function (this: typeof context, value: number) {
+    return value > this.threshold;
+  };
+
+  expect(numbers.myForEach(log, context)).toBe(numbers.forEach(log, context));
+});
