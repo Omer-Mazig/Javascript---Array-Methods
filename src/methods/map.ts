@@ -1,12 +1,7 @@
-import { constructTypeErrorMessage } from "../arrays";
+import {} from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Calls a defined callback function on each element of an array, and returns an array that contains the results.
-     * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
-     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-     */
     myMap<U>(
       callbackfn: (value: T, index: number, array: T[]) => U,
       thisArg?: any
@@ -16,7 +11,7 @@ declare global {
 
 Array.prototype.myMap = function (callbackfn, thisArg) {
   if (typeof callbackfn !== "function" && this.length === 0) {
-    //@ts-expect-error
+    // @ts-expect-error
     callbackfn();
   }
 
@@ -24,15 +19,20 @@ Array.prototype.myMap = function (callbackfn, thisArg) {
     thisArg !== undefined ? callbackfn.bind(thisArg) : callbackfn;
 
   const result = [];
+
   for (let i = 0; i < this.length; i++) {
     if (i in this) {
-      const newValue = boundCallback(this[i], i, this);
-      result[i] = newValue;
+      result[i] = boundCallback(this[i], i, this);
     }
   }
 
   return result;
 };
 
-const a = [1, "baba"].map((item) => String(item));
-const b = [1].myMap((item) => String(item));
+const numbers1 = [1, 2, 3].map((item) => item * 2);
+const string1 = [1, 2, 3].map((item) => String(item));
+const bools1 = [1, 2, 3].map(() => true);
+
+const numbers2 = [1, 2, 3].myMap((item) => item * 2);
+const string2 = [1, 2, 3].myMap((item) => String(item));
+const bools2 = [1, 2, 3].myMap(() => true);

@@ -30,6 +30,6 @@ Array.prototype.myForEach = function (callbackfn, thisArg) {
   }
 };
 
-["baba"].myForEach((item, index, arr) => {
-  item.toLowerCase();
+["baba", 1].myForEach((item, index, arr) => {
+  typeof item === "string" ? item.toLowerCase() : item.toFixed();
 });

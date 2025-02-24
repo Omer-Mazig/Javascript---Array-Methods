@@ -1,35 +1,31 @@
-import { constructTypeErrorMessage } from "../arrays";
+import {} from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Returns a new array with all elements that pass the test implemented by the provided function.
-     * @param callback A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
-     * @param thisArg An object to which the this keyword can refer in the callback function. If thisArg is omitted, undefined is used as the this value.
-     */
     myFilter<S extends T>(
-      callback: (value: T, index: number, array: T[]) => value is S,
+      predicate: (value: T, index: number, array: T[]) => value is S,
       thisArg?: any
     ): S[];
+
     myFilter(
-      callback: (value: T, index: number, array: T[]) => unknown,
+      predicate: (value: T, index: number, array: T[]) => unknown,
       thisArg?: any
     ): T[];
   }
 }
 
-// @ts-ignore
 Array.prototype.myFilter = function (predicate, thisArg) {
   if (typeof predicate !== "function" && this.length === 0) {
     predicate();
   }
 
-  const boundPredicate =
+  const boundCallback =
     thisArg !== undefined ? predicate.bind(thisArg) : predicate;
 
   const result = [];
+
   for (let i = 0; i < this.length; i++) {
-    if (i in this && boundPredicate(this[i], i, this)) {
+    if (i in this && boundCallback(this[i], i, this)) {
       result.push(this[i]);
     }
   }
@@ -37,7 +33,25 @@ Array.prototype.myFilter = function (predicate, thisArg) {
   return result;
 };
 
-[1, 2, "3"].filter((value) => (value ? value : undefined));
-[1, 2, "3"].myFilter((value) => (value ? value : undefined));
-[1, 2, "3"].filter((value) => typeof value === "number");
-[1, 2, "3"].myFilter((value) => typeof value === "number");
+const r1 = [1, 2, "omer"].filter(() => true);
+const r2 = [1, 2, "omer"].myFilter(() => true);
+
+const r3 = [1, 2, "omer"].filter((item) => item);
+const r4 = [1, 2, "omer"].myFilter((item) => item);
+
+const r5 = [1, 2, "omer"].filter((item) => typeof item === "string");
+const r6 = [1, 2, "omer"].myFilter((item) => typeof item === "string");
+
+class X {}
+class Y {
+  baba() {}
+}
+
+const r7 = [new X(), new Y()].filter((item) => item);
+const r8 = [new X(), new Y()].myFilter((item) => item);
+
+const r9 = [new X(), new Y()].filter((item) => item instanceof X);
+const r10 = [new X(), new Y()].myFilter((item) => item instanceof X);
+
+const r11 = [new X(), new Y()].filter((item) => "baba" in item);
+const r12 = [new X(), new Y()].myFilter((item) => "baba" in item);

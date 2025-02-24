@@ -37,9 +37,18 @@ describe("Array.prototype.myFilter", () => {
 
   test("handles sparse arrays", () => {
     const array = [1, , 3]; // eslint-disable-line no-sparse-arrays
-    const nativeResult = array.filter((x) => x !== undefined);
-    const result = array.myFilter((x) => x !== undefined);
+    let nativeIteration = 0;
+    let iteration = 0;
+    const nativeResult = array.filter((x) => {
+      nativeIteration++;
+      return x !== undefined;
+    });
+    const result = array.myFilter((x) => {
+      iteration++;
+      return x !== undefined;
+    });
     expect(result).toEqual(nativeResult);
+    expect(iteration).toEqual(nativeIteration);
   });
 
   test("handle type narrowing with typeof", () => {
