@@ -15,8 +15,9 @@ declare global {
 }
 
 Array.prototype.myMap = function (callbackfn, thisArg) {
-  if (typeof callbackfn !== "function") {
-    throw new TypeError(constructTypeErrorMessage(callbackfn));
+  if (typeof callbackfn !== "function" && this.length === 0) {
+    //@ts-expect-error
+    callbackfn();
   }
 
   const boundCallback =

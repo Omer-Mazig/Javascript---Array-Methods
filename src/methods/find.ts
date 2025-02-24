@@ -8,23 +8,20 @@ declare global {
      * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
      */
     myFind<S extends T>(
-      callback: (value: T, index: number, array: T[]) => value is S
+      callback: (value: T, index: number, array: T[]) => value is S,
+      thisArg?: any
     ): S | undefined;
     myFind(
-      callback: (value: T, index: number, array: T[]) => unknown
+      callback: (value: T, index: number, array: T[]) => unknown,
+      thisArg?: any
     ): T | undefined;
   }
 }
 
-Array.prototype.myFind = function <T, S extends T>(
-  this: T[],
-  predicate:
-    | ((value: T, index: number, array: T[]) => value is S)
-    | ((value: T, index: number, array: T[]) => unknown),
-  thisArg?: any
-): T | S | undefined {
-  if (typeof predicate !== "function") {
-    throw new TypeError(constructTypeErrorMessage(predicate));
+// @ts-ignore
+Array.prototype.myFind = function (predicate, thisArg) {
+  if (typeof predicate !== "function" && this.length === 0) {
+    predicate();
   }
 
   const boundPredicate =

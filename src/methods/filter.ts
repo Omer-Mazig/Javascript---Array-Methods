@@ -8,27 +8,26 @@ declare global {
      * @param thisArg An object to which the this keyword can refer in the callback function. If thisArg is omitted, undefined is used as the this value.
      */
     myFilter<S extends T>(
-      callback: (value: T, index: number, array: T[]) => value is S
+      callback: (value: T, index: number, array: T[]) => value is S,
+      thisArg?: any
     ): S[];
-    myFilter(callback: (value: T, index: number, array: T[]) => unknown): T[];
+    myFilter(
+      callback: (value: T, index: number, array: T[]) => unknown,
+      thisArg?: any
+    ): T[];
   }
 }
 
-Array.prototype.myFilter = function <T, S extends T>(
-  this: T[],
-  predicate:
-    | ((value: T, index: number, array: T[]) => value is S)
-    | ((value: T, index: number, array: T[]) => unknown),
-  thisArg?: any
-): T[] | S[] {
-  if (typeof predicate !== "function") {
-    throw new TypeError(constructTypeErrorMessage(predicate));
+// @ts-ignore
+Array.prototype.myFilter = function (predicate, thisArg) {
+  if (typeof predicate !== "function" && this.length === 0) {
+    predicate();
   }
 
   const boundPredicate =
     thisArg !== undefined ? predicate.bind(thisArg) : predicate;
 
-  const result: T[] = [];
+  const result = [];
   for (let i = 0; i < this.length; i++) {
     if (i in this && boundPredicate(this[i], i, this)) {
       result.push(this[i]);
