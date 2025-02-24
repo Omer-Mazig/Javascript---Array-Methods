@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-Array.prototype.myAt = function <T>(this: T[], index: number): T | undefined {
+Array.prototype.myAt = function (index: number) {
   // Get the length once
   const len = this.length;
 
@@ -44,5 +44,5 @@ Array.prototype.myAt = function <T>(this: T[], index: number): T | undefined {
   return this[finalIndex];
 };
 
-[].at;
-[].myAt;
+[1].at(1);
+[1].myAt(1);

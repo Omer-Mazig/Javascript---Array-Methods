@@ -18,13 +18,8 @@ declare global {
   }
 }
 
-Array.prototype.mySome = function <T, S extends T>(
-  this: T[],
-  predicate:
-    | ((value: T, index: number, array: T[]) => value is S)
-    | ((value: T, index: number, array: T[]) => unknown),
-  thisArg?: any
-): this is S[] {
+// @ts-ignore
+Array.prototype.mySome = function (predicate, thisArg) {
   if (typeof predicate !== "function") {
     throw new TypeError(constructTypeErrorMessage(predicate));
   }
@@ -40,3 +35,9 @@ Array.prototype.mySome = function <T, S extends T>(
 
   return false;
 };
+
+// TODO: this is S[]
+[1, 2, 3].mySome((value) => value > 0);
+[1, 2, 3].mySome((value) => typeof value === "number");
+[1, 2, 3].some((value) => value > 0);
+[1, 2, 3].some((value) => typeof value === "string");

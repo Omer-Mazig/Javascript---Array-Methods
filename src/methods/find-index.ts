@@ -18,13 +18,10 @@ declare global {
   }
 }
 
-Array.prototype.myFindIndex = function <T>(
-  this: T[],
-  predicate: (value: T, index: number, obj: T[]) => unknown,
-  thisArg?: any
-): number {
-  if (typeof predicate !== "function") {
-    throw new TypeError(constructTypeErrorMessage(predicate));
+Array.prototype.myFindIndex = function (predicate, thisArg): number {
+  if (typeof predicate !== "function" && this.length === 0) {
+    // @ts-ignore
+    predicate();
   }
 
   const boundPredicate =

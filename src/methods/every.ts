@@ -17,16 +17,10 @@ declare global {
     ): boolean;
   }
 }
-
-Array.prototype.myEvery = function <T, S extends T>(
-  this: T[],
-  predicate:
-    | ((value: T, index: number, array: T[]) => value is S)
-    | ((value: T, index: number, array: T[]) => unknown),
-  thisArg?: any
-): this is S[] {
-  if (typeof predicate !== "function") {
-    throw new TypeError(constructTypeErrorMessage(predicate));
+// @ts-ignore
+Array.prototype.myEvery = function (predicate, thisArg) {
+  if (typeof predicate !== "function" && this.length === 0) {
+    predicate();
   }
 
   const boundPredicate =
@@ -41,6 +35,7 @@ Array.prototype.myEvery = function <T, S extends T>(
   return true;
 };
 
+// TODO: this is S[]
 [1, 2, 3].myEvery((value) => value > 0);
 [1, 2, 3].myEvery((value) => typeof value === "number");
 [1, 2, 3].every((value) => value > 0);

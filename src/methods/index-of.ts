@@ -12,12 +12,7 @@ declare global {
 }
 
 // TODO: handle fromIndex when passing something different than numbers
-
-Array.prototype.myIndexOf = function <T>(
-  this: T[],
-  searchElement: T,
-  fromIndex: number = 0
-): number {
+Array.prototype.myIndexOf = function (searchElement, fromIndex = 0) {
   const len = this.length;
 
   fromIndex = parseArgument(fromIndex) ?? 0;

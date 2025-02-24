@@ -11,13 +11,11 @@ declare global {
   }
 }
 
-Array.prototype.mySlice = function <T>(
-  this: T[],
-  start?: number,
-  end?: number
-): T[] {
+// @ts-ignore
+Array.prototype.mySlice = function (start, end) {
   const len = this.length;
-  const result: T[] = [];
+  // @ts-ignore
+  const result = [];
 
   // Convert parameters to numbers
   let actualStart = 0;
@@ -31,6 +29,7 @@ Array.prototype.mySlice = function <T>(
 
   // If start is greater than end, return empty array
   if (actualStart >= actualEnd) {
+    // @ts-ignore
     return result;
   }
 

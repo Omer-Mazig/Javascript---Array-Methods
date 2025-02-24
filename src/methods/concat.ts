@@ -11,12 +11,9 @@ declare global {
   }
 }
 
-Array.prototype.myConcat = function <T>(
-  this: Array<T>,
-  ...items: Array<T>[] | (T | Array<T>)[]
-): // return the type of 'this'
-T[] {
-  const result: T[] = [];
+// @ts-ignore
+Array.prototype.myConcat = function (...items) {
+  const result = [];
 
   for (let i = 0; i < this.length; i++) {
     if (i in this) {
@@ -31,12 +28,11 @@ T[] {
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     if (isConcatSpreadable(item)) {
-      const arr = item as T[];
-      for (let j = 0; j < arr.length; j++) {
-        result.push(arr[j]);
+      for (let j = 0; j < item.length; j++) {
+        result.push(item[j]);
       }
     } else {
-      result.push(item as T);
+      result.push(item);
     }
   }
 
