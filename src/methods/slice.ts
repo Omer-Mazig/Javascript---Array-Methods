@@ -2,41 +2,27 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified.
-     * @param start The beginning index of the specified portion of the array.
-     * @param end The end index of the specified portion of the array.
-     */
     mySlice(start?: number, end?: number): T[];
   }
 }
 
-// @ts-ignore
 Array.prototype.mySlice = function (start, end) {
   const len = this.length;
-  // @ts-ignore
   const result = [];
 
-  // Convert parameters to numbers
-  let actualStart = 0;
-  let actualEnd = len;
-
-  actualStart = parseArgument(start) ?? 0; // 0 is default
-  actualEnd = parseArgument(end) ?? len;
+  let actualStart = parseArgument(start) ?? 0;
+  let actualEnd = parseArgument(end) ?? len;
 
   actualStart = normalizeIndex(actualStart, len);
   actualEnd = normalizeIndex(actualEnd, len);
 
-  // If start is greater than end, return empty array
-  if (actualStart >= actualEnd) {
-    // @ts-ignore
-    return result;
-  }
-
   actualStart = roundNumber(actualStart);
   actualEnd = roundNumber(actualEnd);
 
-  // Copy elements to result array, preserving holes in sparse arrays
+  if (actualStart >= actualEnd) {
+    return [];
+  }
+
   let j = 0;
   for (let i = actualStart; i < actualEnd; i++) {
     if (i in this) {

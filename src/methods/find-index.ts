@@ -20,7 +20,7 @@ declare global {
 
 Array.prototype.myFindIndex = function (predicate, thisArg): number {
   if (typeof predicate !== "function" && this.length === 0) {
-    // @ts-ignore
+    // @ts-expect-error
     predicate();
   }
 

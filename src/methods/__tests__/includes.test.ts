@@ -55,18 +55,15 @@ describe("myIncludes", () => {
   });
 
   it("should handle sparse arrays", () => {
-    // eslint-disable-next-line no-sparse-arrays
     const sparseArray = [1, , 3];
 
-    // @ts-ignore
     expect(sparseArray.myIncludes(undefined)).toBe(
-      // @ts-ignore
       sparseArray.includes(undefined)
     );
   });
 
   it("should work with empty arrays", () => {
-    const empty: number[] = [];
+    const empty = [];
     expect(empty.myIncludes(1)).toBe(empty.includes(1));
   });
 
@@ -131,6 +128,8 @@ describe("myIncludes", () => {
     expect(array.myIncludes(2, [1, 2])).toBe(array.includes(2, [1, 2]));
     // @ts-expect-error: Testing with nested arrays
     expect(array.myIncludes(2, [[1]])).toBe(array.includes(2, [[1]]));
+
+    expect(array.myIncludes(2, NaN)).toBe(array.includes(2, NaN));
   });
 
   it("should handle array-like objects with missing indices", () => {

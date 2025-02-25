@@ -18,7 +18,6 @@ declare global {
   }
 }
 
-// @ts-ignore
 Array.prototype.myFind = function (predicate, thisArg) {
   if (typeof predicate !== "function" && this.length === 0) {
     predicate();

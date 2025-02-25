@@ -36,8 +36,7 @@ Array.prototype.mySome = function (predicate, thisArg) {
   return false;
 };
 
-// TODO: this is S[]
 [1, 2, 3].mySome((value) => value > 0);
 [1, 2, 3].mySome((value) => typeof value === "number");
 [1, 2, 3].some((value) => value > 0);
-[1, 2, 3].some((value) => typeof value === "string");
+[1, 2, 3].some((value) => typeof value !== "string");

@@ -35,8 +35,8 @@ Array.prototype.myEvery = function (predicate, thisArg) {
   return true;
 };
 
-// TODO: this is S[]
+// TODO: this is S[] ?
+[1, 2, 3].every((value) => value > 0);
+const a = [1, 2, 3].every((value) => typeof value === "string");
 [1, 2, 3].myEvery((value) => value > 0);
 [1, 2, 3].myEvery((value) => typeof value === "number");
-[1, 2, 3].every((value) => value > 0);
-[1, 2, 3].every((value) => typeof value === "string");
