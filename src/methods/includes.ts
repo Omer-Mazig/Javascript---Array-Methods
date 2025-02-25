@@ -21,24 +21,26 @@ Array.prototype.myIncludes = function (searchElement, fromIndex) {
   }
 
   fromIndex = normalizeIndex(fromIndex, len);
-  fromIndex = roundNumber(fromIndex);
+  fromIndex = Math.trunc(fromIndex);
 
   for (let i = fromIndex; i < len; i++) {
     if (this[i] === searchElement) {
+      return true;
+    }
+    if (isActuallyNaN(this[i] && isActuallyNaN(searchElement))) {
       return true;
     }
   }
   return false;
 };
 
+function isActuallyNaN(value: unknown) {
+  return typeof value === "number" && isNaN(value);
+}
+
 function normalizeIndex(index: number, length: number): number {
   if (index < 0) {
     return Math.max(length + index, 0);
   }
   return Math.min(index, length);
-}
-
-function roundNumber(n: number) {
-  n > 0 ? (n = Math.floor(n)) : Math.ceil(n);
-  return n;
 }

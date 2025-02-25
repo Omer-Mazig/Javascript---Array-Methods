@@ -16,8 +16,8 @@ Array.prototype.mySlice = function (start, end) {
   actualStart = normalizeIndex(actualStart, len);
   actualEnd = normalizeIndex(actualEnd, len);
 
-  actualStart = roundNumber(actualStart);
-  actualEnd = roundNumber(actualEnd);
+  actualStart = Math.trunc(actualStart);
+  actualEnd = Math.trunc(actualEnd);
 
   if (actualStart >= actualEnd) {
     return [];
@@ -63,9 +63,4 @@ function normalizeIndex(index: number, length: number): number {
     return Math.max(length + index, 0);
   }
   return Math.min(index, length);
-}
-
-function roundNumber(n: number) {
-  n > 0 ? (n = Math.floor(n)) : Math.ceil(n);
-  return n;
 }
