@@ -14,7 +14,8 @@ declare global {
   }
 }
 
-Array.prototype.myFilter = function (predicate, thisArg) {
+Array.prototype.myFilter = function
+ (predicate, thisArg) {
   if (typeof predicate !== "function" && this.length === 0) {
     predicate();
   }
