@@ -6,7 +6,6 @@ declare global {
   }
 }
 
-// TODO: handle fromIndex when passing something different than numbers
 Array.prototype.myIndexOf = function (searchElement, fromIndex = 0) {
   const len = this.length;
 
