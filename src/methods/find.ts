@@ -2,11 +2,6 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Returns the value of the first element in the array that satisfies the provided testing function. Otherwise, undefined is returned.
-     * @param callbackfn A function that accepts up to three arguments. The find method calls the callbackfn function one time for each element in the array.
-     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-     */
     myFind<S extends T>(
       callback: (value: T, index: number, array: T[]) => value is S,
       thisArg?: any

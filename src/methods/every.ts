@@ -2,11 +2,6 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Determines whether all the members of an array satisfy the specified test.
-     * @param predicate A function that accepts up to three arguments. The every method calls the predicate function for each element in the array.
-     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
-     */
     myEvery<S extends T>(
       predicate: (value: T, index: number, array: T[]) => value is S,
       thisArg?: any

@@ -2,11 +2,6 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.
-     * @param searchElement The value to locate in the array.
-     * @param fromIndex The array index at which to start the search. Defaults to 0.
-     */
     myIndexOf(searchElement: T, fromIndex?: number): number;
   }
 }

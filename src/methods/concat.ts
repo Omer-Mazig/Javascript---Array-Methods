@@ -2,10 +2,6 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Combines two or more arrays.
-     * @param items The arrays to concatenate.
-     */
     myConcat(...items: Array<T>[]): T[];
     myConcat(...items: (T | Array<T>)[]): T[];
   }

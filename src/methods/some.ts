@@ -2,11 +2,6 @@ import { constructTypeErrorMessage } from "../arrays";
 
 declare global {
   interface Array<T> {
-    /**
-     * Determines whether the specified callback function returns true for any element of an array.
-     * @param predicate A function that accepts up to three arguments. The some method calls the predicate function for each element in the array.
-     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
-     */
     mySome<S extends T>(
       predicate: (value: T, index: number, array: T[]) => value is S,
       thisArg?: any
